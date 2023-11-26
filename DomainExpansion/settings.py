@@ -24,10 +24,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
+
 SECRET_KEY = os.environ['SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+
+DEBUG = True
 
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'domain-expansion.herokuapp.com']
 
@@ -132,21 +134,26 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
-#STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+# STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
-STATIC_URL = '/static/'
-MEDIA_URL = '/images/'
+# STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'staticfiles')
+# STATIC_URL = '/static/'
+# MEDIA_URL = '/images/'
+
+# STATICFILES_DIRS = [
+#     BASE_DIR / 'static'
+# ]
+
+# MEDIA_ROOT = BASE_DIR / 'static/images'
+
+STATIC_URL = 'static/'
+STATIC_ROOT = os.path.join(BASE_DIR, "static/")
+STATICFILES_DIR = [os.path.join(BASE_DIR, "static")]
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 
-STATICFILES_DIRS = [
-    BASE_DIR / 'static',
-]
-
-
-MEDIA_ROOT = BASE_DIR / 'static/images'
-
-#STATIC_ROOT = BASE_DIR / 'staticfiles'
-
+MEDIA_URL = 'media/'
+MEDIA_ROOT = os.path.join(BASE_DIR , "media")
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
@@ -154,3 +161,6 @@ MEDIA_ROOT = BASE_DIR / 'static/images'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 django_heroku.settings(locals())
+
+if os.getcwd() == '/app':
+    DEBUG = True
